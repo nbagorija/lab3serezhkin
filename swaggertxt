@@ -1,0 +1,91 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Notes API"
+paths:
+  /note:
+    get:
+      summary: "Запись полученная в базе данных"
+      description: "Получает информацию о записи по идентификатору"
+      parameters:
+        - name: id
+          in: query
+          description: "Идентификатор записи"
+          required: true
+          type: integer
+      responses:
+        200:
+          description: "Успешный запрос"
+          schema:
+            $ref: "#/definitions/Note"
+    post:
+      summary: "Запись добавлена в базе данных"
+      description: "Добавляет новую запись в базу данных"
+      parameters:
+        - name: note
+          in: body
+          description: "Данные записи для добавления"
+          required: true
+          schema:
+            $ref: "#/definitions/NoteInput"
+      responses:
+        201:
+          description: "Запись успешно добавлена"
+          schema:
+            $ref: "#/definitions/Note"
+    put:
+      summary: "Запись отредактированна в базе данных"
+      description: "Редактирует существующую запись в базе данных"
+      parameters:
+        - name: id
+          in: query
+          description: "Идентификатор записи"
+          required: true
+          type: integer
+        - name: note
+          in: body
+          description: "Обновленные данные записи"
+          required: true
+          schema:
+            $ref: "#/definitions/NoteInput"
+      responses:
+        200:
+          description: "Заметка успешно отредактирована"
+          schema:
+            $ref: "#/definitions/Note"
+    delete:
+      summary: "Запись удалена в базе данных"
+      description: "Удаляет запись из базы данных по идентификатору"
+      parameters:
+        - name: id
+          in: query
+          description: "Идентификатор записи"
+          required: true
+          type: integer
+      responses:
+        204:
+          description: "Запись успешно удалена"
+
+definitions:
+  Note:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Идентификатор заметки"
+      title:
+        type: string
+        description: "Заголовок заметки"
+      content:
+        type: string
+        description: "Содержание заметки"
+
+  NoteInput:
+    type: object
+    properties:
+      title:
+        type: string
+        description: "Заголовок заметки"
+      content:
+        type: string
+        description: "Содержание заметки"
